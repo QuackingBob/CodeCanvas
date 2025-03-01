@@ -218,10 +218,17 @@ class CodeEditorApp:
         if folder is None and self.project_path:
             folder = os.path.join(self.project_path, "images")
             os.makedirs(folder, exist_ok=True)
-            os.startfile(folder)
+            if os.name == 'posix':
+                subprocess.Popen(['xdg-open', folder])
+            else:
+                os.startfile(folder)
             # subprocess.Popen(folder)
         elif folder is not None:
-            os.startfile(folder)
+            if os.name == 'posix':
+                subprocess.Popen(['xdg-open', folder])
+            else:
+                os.startfile(folder)
+            # os.startfile(folder)
             # subprocess.Popen()
 
 class LineNumbers(tk.Canvas):
