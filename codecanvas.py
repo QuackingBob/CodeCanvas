@@ -9,6 +9,7 @@ import pyperclip
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 import io
 from pygments.formatters import HtmlFormatter, ImageFormatter
+import subprocess
 
 class CodeEditorApp:
     def __init__(self, root):
@@ -47,6 +48,9 @@ class CodeEditorApp:
         
         self.save_button = ttk.Button(self.toolbar, text="Save Project", command=self.save_project, width=15)
         self.save_button.pack(side=tk.LEFT, padx=5, pady=5)
+
+        self.open_folder_button = ttk.Button(self.toolbar, text="Open Folder", command=self.open_folder, width=15)
+        self.open_folder_button.pack(side=tk.LEFT, padx=5, pady=5)
         
         # Create a canvas with scrollbar for the cells
         self.canvas_frame = ttk.Frame(self.main_frame)
@@ -205,6 +209,20 @@ class CodeEditorApp:
             json.dump(data, f, indent=4)
         
         self.status_var.set("Project saved successfully!")
+
+    def open_folder(self, folder=None):
+        if not self.project_path:
+            self.status_var.set("No project opened. Please open or create a project first.")
+            return
+
+        if folder is None and self.project_path:
+            folder = os.path.join(self.project_path, "images")
+            os.makedirs(folder, exist_ok=True)
+            os.startfile(folder)
+            # subprocess.Popen(folder)
+        elif folder is not None:
+            os.startfile(folder)
+            # subprocess.Popen()
 
 class LineNumbers(tk.Canvas):
     def __init__(self, parent, text_widget, **kwargs):
