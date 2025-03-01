@@ -222,14 +222,11 @@ class CodeEditorApp:
                 subprocess.Popen(['xdg-open', folder])
             else:
                 os.startfile(folder)
-            # subprocess.Popen(folder)
         elif folder is not None:
             if os.name == 'posix':
                 subprocess.Popen(['xdg-open', folder])
             else:
                 os.startfile(folder)
-            # os.startfile(folder)
-            # subprocess.Popen()
 
 class LineNumbers(tk.Canvas):
     def __init__(self, parent, text_widget, **kwargs):
